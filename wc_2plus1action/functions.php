@@ -119,7 +119,7 @@ class Functions
 			$needed_quantity_of_free_items = floor($cart->cart_contents_count / 3) - $free_items_in_cart;
 
 			/*	
-				Decrease the original quantity of product
+				Remove hook to prevent recursion
 			*/
 			remove_action("woocommerce_before_calculate_totals",array("WC_2plus1\Action","setThirdItemAsFree"),10);
 			/*
@@ -151,6 +151,9 @@ class Functions
 				);
 				add_filter('woocommerce_add_cart_item_data',$filter,10,2);
 			}
+			/*
+				After all is done, return hook back
+			*/
 			add_action("woocommerce_before_calculate_totals",array("WC_2plus1\Action","setThirdItemAsFree"),10,1);
 		}
 		/*
